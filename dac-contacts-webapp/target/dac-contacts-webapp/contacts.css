@@ -1,0 +1,54 @@
+.brand-logo {
+	margin-left: 30px;
+}
+
+.search-bar > input[type="text"]{
+	border: 1px solid lightgrey;
+	padding-left: 15px;
+}
+
+.search-bar > .btn-search {
+display: table-cell;
+    vertical-align: top;
+}
+
+.search-bar > .input-search {
+	display: table-cell;
+    vertical-align: top;
+}
+
+.search-bar > input[type="text"]:focus  {
+	box-shadow: 0 1px 0 0 #01579b;
+	border-bottom: 1px solid #01579b;
+}
+
+.search-bar {
+	display: table;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.btn.small {
+	padding-left: 10px;
+	padding-right: 10px;
+	font-size: 0.8em;
+}
+
+.form-wrapper {
+	padding-top: 70px;
+	padding-bottom: 70px;
+}
+
+.footer-action > .btn-flat{
+    color: #fff !important;
+    margin-left: 10px !important;
+}
+
+.search-action .btn {
+    margin-right: 10px !important;
+}
+
+
+
+
+

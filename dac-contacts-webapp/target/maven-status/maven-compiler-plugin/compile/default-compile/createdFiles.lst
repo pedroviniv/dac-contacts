@@ -1,0 +1,4 @@
+br\edu\ifpb\dac\atividade\contacts\webapp\filter\NoCacheFilter.class
+br\edu\ifpb\dac\atividade\contacts\webapp\producers\ServiceLocator.class
+br\edu\ifpb\dac\atividade\contacts\webapp\producers\ContactServiceProducer.class
+br\edu\ifpb\dac\atividade\contacts\webapp\beans\ContactBean.class

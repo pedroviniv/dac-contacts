@@ -1,0 +1,4 @@
+br\edu\ifpb\dac\atividade\contacts\core\dao\ContactDAOJdbcImpl.class
+br\edu\ifpb\dac\atividade\contacts\core\dao\Connector.class
+br\edu\ifpb\dac\atividade\contacts\core\service\ContactServiceImpl.class
+br\edu\ifpb\dac\atividade\contacts\core\dao\ContactDAO.class
