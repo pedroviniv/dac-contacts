@@ -1,6 +1,6 @@
 # dac-contacts
 ___
-O **dac-contacts** trata-se de uma atividade avaliativa sobre Docker e Java Server Faces (JSF) da displina Desenvolvimento de Aplicações Coorporativas (DAC).
+O **dac-contacts** trata-se de uma atividade avaliativa sobre Docker e Java Server Faces (JSF) da displina Desenvolvimento de Aplicações Corporativas (DAC).
 
 O projeto divide-se em 3 módulos.
 
