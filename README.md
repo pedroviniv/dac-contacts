@@ -25,7 +25,12 @@ Uma vez instalado o Docker, copie este repositório para a sua máquina através
 do comando:
 - `git clone https://github.com/pedroviniv/dac-contacts.git`
 
-Após copiar o repositório, abra o terminal na pasta do projeto copiado e crie as imagens a partir do dockerfile de cada módulo através dos seguintes comandos (OBS: se você instalou o docker pela primeira vez, a execução destes comandos podem demorar algum tempo):
+Após copiar o repositório, abra o terminal na pasta do projeto copiado e para construir todos os módulos do projeto e instalar no repositório maven local da sua máquina, execute o comando:
+
+- `mvn clean install`
+
+Uma vez construído e instalado todos os módulos da aplicação, Crie as imagens a partir do dockerfile de cada módulo através dos seguintes comandos (OBS: se você instalou o docker pela primeira vez, a execução destes comandos podem demorar algum tempo):
+
 1. `docker build -t dac-contacts-core-db ./dac-contacts-core/postgres`
 2. `docker build -t dac-contacts-core ./dac-contacts-core`
 3. `docker build -t dac-contacts-webapp ./dac-contacts-webapp`
