@@ -1,4 +1,4 @@
-# dac-contacts
+g# dac-contacts
 ___
 O **dac-contacts** trata-se de uma atividade avaliativa sobre Docker e Java Server Faces (JSF) da displina Desenvolvimento de Aplicações Corporativas (DAC).
 
@@ -36,6 +36,7 @@ Uma vez construído e instalado todos os módulos da aplicação, Crie as imagen
 3. `docker build -t dac-contacts-webapp ./dac-contacts-webapp`
 
 Uma vez criada as imagens de cada módulo do projeto, agora basta instanciarmos um container para cada imagem criada. Para fazê-lo, execute os comandos abaixo (OBS: se alguma das portas abaixo já estiver sendo usada no seu SO, basta mudá-las para uma que não esteja):
+
 1. `docker run -p 5433:5432 -d --name dac-contacts-core-db dac-contacts-core-db`
 
 2. `docker run -p 8081:8080 -p 1098:1099 -p 1097:1098 -p 3874:3873 -p 3701:3700 -p 8182:8181 -p 8010:8009 -d --name dac-contacts-core --link dac-contacts-core-db:dac-contacts-core-db dac-contacts-core`
