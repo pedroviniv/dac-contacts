@@ -175,5 +175,67 @@ public class ContactDAOJdbcImpl implements ContactDAO {
         
         return contact;
     }
+
+    @Override
+    public List<Contact> getContactsByFirstLetterOrderByName(Character letter) {
+        List<Contact> result = new ArrayList<>();
+        
+        try {      
+            Connection conn = Connector.getConnection();
+            
+            String sql = "SELECT * FROM contact WHERE substr(firstname, 1, 1) ilike ?"
+                    + " ORDER BY firstname || lastname ASC";  
+            
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            
+            int i = 1;
+            
+            pstm.setString(i, letter.toString());
+            
+            ResultSet rs = pstm.executeQuery();
+            
+            while(rs.next()) {
+                result.add(createContact(rs));
+            }
+            
+            pstm.close();
+            conn.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ContactDAOJdbcImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return result;
+    }
+
+    @Override
+    public List<Character> getAllContactsFirstLettersAsc() {
+        
+        List<Character> result = new ArrayList<>();
+        
+        try {      
+            Connection conn = Connector.getConnection();
+            
+            String sql = "SELECT substr(firstname, 1, 1) AS letter"
+                    + " FROM contact GROUP BY substr(firstname, 1, 1)"
+                    + " ORDER BY letter ASC";  
+            
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            
+            ResultSet rs = pstm.executeQuery();
+            
+            while(rs.next()) {
+                result.add(rs.getString("letter").charAt(0));
+            }
+            
+            pstm.close();
+            conn.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ContactDAOJdbcImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return result;
+    }
     
 }

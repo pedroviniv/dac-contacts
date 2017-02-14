@@ -33,12 +33,17 @@ public class ContactServiceImpl implements ContactService {
     public void updateContact(Contact contact) {
         contactDAO.update(contact);
     }
-
+    
     @Override
-    public List<Contact> getContactsOrderByName() {
-        return contactDAO.listOrderByName();
+    public List<Contact> getContactsByFirstLetterOrderByName(Character letter) {
+        return contactDAO.getContactsByFirstLetterOrderByName(letter);
     }
-
+    
+    @Override
+    public List<Character> getAllFirstLettersAsc() {
+        return contactDAO.getAllContactsFirstLettersAsc();
+    }
+    
     @Override
     public List<Contact> getContacsByName(String name) {
         return contactDAO.searchByName(name);

@@ -5,7 +5,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <meta charset="utf-8"></meta>
         <title>Contacts</title>
@@ -40,8 +40,7 @@
                                     <h:form>
                                         <h:inputText a:placeholder="Search by name" class="input-search" value="#{contactBean.searchArgument}" />
                                         <div class="search-action">
-                                            <h:commandButton action="#{contactBean.filterContactsByName()}" class="btn light-blue darken-4" value="Search" />
-                                            <h:commandButton action="#{contactBean.orderContactsByName()}" class="btn light-blue darken-4" value="Order By Name" />
+                                            <h:commandButton action="#{contactBean.searchContactsByName()}" class="btn light-blue darken-4" value="Search" />
                                         </div>
                                     </h:form>
                                 </div>
@@ -83,6 +82,19 @@
                                 </h:commandLink>
                             </h:column>   
                         </h:dataTable>
+
+                        <div class="pagination-wrapper block-center">
+                            <ul class="pagination">
+                                <ui:repeat var="page" value="#{contactBean.characters}">
+                                    <ui:fragment rendered="#{page eq contactBean.activePage}">
+                                        <li class="active blue"><h:commandLink action="#{contactBean.getContactsByFirstLetterOrderByName(page)}" value="#{page}" /></li>
+                                    </ui:fragment>      
+                                    <ui:fragment rendered="#{page ne contactBean.activePage}">
+                                        <li class="waves-effect"><h:commandLink action="#{contactBean.getContactsByFirstLetterOrderByName(page)}" value="#{page}" /></li>
+                                    </ui:fragment>
+                                </ui:repeat>
+                            </ul>
+                        </div>
                     </h:form>
                 </form>
             </div>

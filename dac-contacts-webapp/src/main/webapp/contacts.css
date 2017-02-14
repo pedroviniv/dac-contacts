@@ -48,6 +48,15 @@ display: table-cell;
     margin-right: 10px !important;
 }
 
+.block-center {
+    display: block;
+    margin: 0px auto;
+}
+
+.pagination > .active.blue {
+    background-color: #01579b !important;
+}
+
 
 
 

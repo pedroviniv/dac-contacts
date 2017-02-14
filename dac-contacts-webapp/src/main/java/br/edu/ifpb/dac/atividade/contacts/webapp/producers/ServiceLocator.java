@@ -23,7 +23,7 @@ public class ServiceLocator {
         try {
             Properties props = new Properties();
             //dac-contacts-core
-            props.setProperty("org.omg.CORBA.ORBInitialHost", "dac-contacts-core");
+            props.setProperty("org.omg.CORBA.ORBInitialHost", "localhost");
             props.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
             props.put(Context.INITIAL_CONTEXT_FACTORY,
                     "com.sun.enterprise.naming.SerialInitContextFactory");

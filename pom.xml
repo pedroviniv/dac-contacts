@@ -15,5 +15,4 @@
         <module>dac-contacts-shared</module>
         <module>dac-contacts-webapp</module>
     </modules>
-    
 </project>

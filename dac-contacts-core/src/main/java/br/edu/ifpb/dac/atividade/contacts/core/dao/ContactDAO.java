@@ -19,5 +19,7 @@ public interface ContactDAO {
     void update(Contact contact);
     List<Contact> listOrderByName();
     List<Contact> searchByName(String argument);
+    List<Contact> getContactsByFirstLetterOrderByName(Character letter);
+    List<Character> getAllContactsFirstLettersAsc();
     
 }

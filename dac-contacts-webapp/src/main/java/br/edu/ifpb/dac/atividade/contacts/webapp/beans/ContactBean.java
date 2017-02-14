@@ -10,9 +10,7 @@ import br.edu.ifpb.dac.atividade.contacts.shared.ContactService;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -21,13 +19,8 @@ import javax.inject.Named;
  * @author Pedro Arthur
  */
 @Named
-@ConversationScoped
+@SessionScoped
 public class ContactBean implements Serializable {
-    
-    private final static String REDIRECT="index?faces-redirect=true";
-    
-    @Inject
-    private Conversation conversation;
     
     @Inject
     private ContactService contactService;
@@ -35,16 +28,107 @@ public class ContactBean implements Serializable {
     private List<Contact> contacts; 
     private String searchArgument = "";
     
+    private List<Character> characters;
+    private Character activePage;
+
     private Contact contact = new Contact();
+    
     private boolean editing = false;
+    private boolean searching = false;
     
     @PostConstruct
     private void postConstruct() {
-        System.out.println("Construindo ContactBean...");
-        this.conversation.begin();
-        this.contacts = contactService.getContacsByName(searchArgument);
+        this.activePage = Character.MIN_VALUE;
+        loadContacts();
+    }
+    
+    public String getContactsByFirstLetterOrderByName(Character firstLetter) {
+        this.activePage = firstLetter;
+        loadContactsPaged();
+        this.characters = contactService.getAllFirstLettersAsc();
+        return null;
+    }
+    
+    public String editContact(Contact contact) {
+        
+        this.contact = contact;
+        this.editing = true;
+        
+        return null;
+    }
+    
+    public String saveChanges() { 
+        this.contactService.updateContact(contact);
+        loadContacts();
+        
+        return null;
+    }
+    
+    public String preparingToSave() {
+        this.contact = new Contact();
+        this.editing = false;
+        
+        return null;
+    }
+    
+    public String persistContact() {
+        this.contactService.newContact(contact);
+        loadContacts();
+        
+        return null;
+    }
+    
+    public String deleteContact(Contact contact) {
+        this.contactService.removeContact(contact);
+        loadContacts();
+        
+        return null;
+    }
+    
+    public String searchContactsByName() {
+        filterContactsByName(searchArgument);
+        return null;
+    }
+    
+    private void filterContactsByName(String name) {
+        this.contacts = this.contactService.getContacsByName(name);
+        this.activePage = Character.MIN_VALUE;
+    }
+    
+    // AUXILIAR
+    private void loadContacts() {
+        if(this.activePage == Character.MIN_VALUE) 
+            filterContactsByName(searchArgument);
+        else 
+            loadContactsPaged();
+            
+        this.characters = contactService.getAllFirstLettersAsc();
+    }
+    
+    private void loadContactsPaged() {
+        this.contacts = contactService.getContactsByFirstLetterOrderByName(activePage);
     }
 
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+    
+    public String getSearchArgument() {
+        return searchArgument;
+    }
+
+    public void setSearchArgument(String searchArgument) {
+        this.searchArgument = searchArgument;
+    }
+
+    public Character getActivePage() {
+        return activePage;
+    }
+
+    public void setActivePage(Character activePage) {
+        this.activePage = activePage;
+    }
+    
     public Contact getContact() {
         return contact;
     }
@@ -57,76 +141,15 @@ public class ContactBean implements Serializable {
         return editing;
     }
 
-    public void setEditing(boolean Editing) {
-        this.editing = Editing;
-    }
-    
-    public String editContact(Contact contact) {
-        System.out.println("Preparing to EDIT: "+contact.getFirstname()+" "+contact.getLastname());
-        this.contact = contact;
-        this.editing = true;
-        
-        return null;
-    }
-    
-    public String preparingToSave() {
-        this.contact = new Contact();
-        System.out.println("Preparing to SAVE new contact... ");
-        this.editing = false;
-        
-        return null;
-    }
-    
-    public String saveChanges() {
-        
-        System.out.println("SAVING CHANGES: "+contact.getFirstname()+" "+contact.getLastname());
-        this.contactService.updateContact(contact);
-        
-        this.conversation.end();
-        
-        return REDIRECT;
-    }
-    
-    public String deleteContact(Contact contact) {
-        this.contactService.removeContact(contact);
-        
-        this.conversation.end();
-
-        return REDIRECT;
-    }
-    
-    public String persistContact() {
-        System.out.println("PERSISTING: "+contact.getFirstname()+" "+contact.getLastname());
-        this.contactService.newContact(contact);
-        
-        this.conversation.end();
-        
-        return REDIRECT;
-    }
-    
-    public String orderContactsByName() {
-        this.contacts = this.contactService.getContactsOrderByName();
-        return null;
-    }
-    
-    public String filterContactsByName() {
-        this.contacts = this.contactService.getContacsByName(searchArgument);
-        return null;
+    public boolean isSearching() {
+        return searching;
     }
 
-    public List<Contact> getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(List<Contact> contacts) {
-        this.contacts = contacts;
+    public void setSearching(boolean searching) {
+        this.searching = searching;
     }
     
-    public String getSearchArgument() {
-        return searchArgument;
-    }
-
-    public void setSearchArgument(String searchArgument) {
-        this.searchArgument = searchArgument;
+    public List<Character> getCharacters() {
+        return this.characters;
     }
 }

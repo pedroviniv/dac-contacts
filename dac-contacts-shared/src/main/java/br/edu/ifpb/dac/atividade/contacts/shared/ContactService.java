@@ -16,6 +16,7 @@ public interface ContactService {
     void newContact(Contact contact);
     void updateContact(Contact contact);
     void removeContact(Contact contact);
-    List<Contact> getContactsOrderByName();
+    List<Contact> getContactsByFirstLetterOrderByName(Character firstLetter);
+    List<Character> getAllFirstLettersAsc();
     List<Contact> getContacsByName(String name);
 }
