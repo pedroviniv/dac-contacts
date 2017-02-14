@@ -33,7 +33,7 @@ public class Connector implements Serializable {
             prop.load(new FileInputStream(Connector.class.getClassLoader().getResource(PROP_NAME).toURI().getPath()));
             
             dataSource = new PGPoolingDataSource();
-            dataSource.setDataSourceName("Contacts DataSource");
+            dataSource.setDataSourceName("dac-contacts data-source");
            
             dataSource.setDatabaseName(prop.getProperty("database"));
             dataSource.setServerName(prop.getProperty("host"));
