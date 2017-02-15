@@ -1,5 +1,4 @@
 # dac-contacts
-___
 O **dac-contacts** trata-se de uma atividade avaliativa sobre Docker e Java Server Faces (JSF) da displina Desenvolvimento de Aplicações Corporativas (DAC).
 
 O projeto divide-se em 3 módulos.
@@ -16,7 +15,7 @@ ___
 - **RF04**: Editar um contato existente.
 - **RF05**: Excluir um contato existente.
 
-#### Manual de implamtação
+#### Manual de implantação
 ___
 **>>IMPORTANTE<<**
 Como este projeto foi desenvolvido utilizando Docker para separar os módulos em containers distintos, para executar as etapas de implantação é necessário que se tenha o Docker instalado em sua máquina. Clique [neste link](https://docs.docker.com/engine/getstarted/step_one/#step-1-get-docker) e siga os passos indicados para baixar e instalar o Docker.
@@ -29,7 +28,15 @@ Após copiar o repositório, abra o terminal na pasta do projeto copiado e para 
 
 - `mvn clean install`
 
-Uma vez construído e instalado todos os módulos da aplicação, Crie as imagens a partir do dockerfile de cada módulo através dos seguintes comandos (OBS: se você instalou o docker pela primeira vez, a execução destes comandos podem demorar algum tempo):
+Uma vez construído e instalado todos os módulos da aplicação, deve-se criar as imagens a partir do dockerfile e instanciar os containers a partir das imagens criadas, interligando-os através da flag `--link` para que os containers possam se comunicar entre si. 
+
+Existem duas maneiras de realizar este procedimento, a maneira mais manual, executando cada comando e a maneira mais automática executando o docker compose que já contém todos os passos pré definidos.
+
+Ambas as maneiras são definidas abaixo:
+
+#####Manual
+
+Ainda no terminal aberto no diretório do projeto, execute os comandos abaixo para construir as imagens:
 
 1. `docker build -t dac-contacts-core-db ./dac-contacts-core/postgres`
 2. `docker build -t dac-contacts-core ./dac-contacts-core`
@@ -43,7 +50,15 @@ Uma vez criada as imagens de cada módulo do projeto, agora basta instanciarmos 
 
 3. `docker run -p 8082:8080 -d --name dac-contacts-webapp --link dac-contacts-core:dac-contacts-core dac-contacts-webapp`
 
-Após seguir as etapas acima, os módulos estarão no ar e no caso de não haver a necessidade de mudar as portas, estarão disponíveis nas portas default fornecidas nas etapas acima.
+
+#####Automática
+
+Ainda no terminal aberto no diretório do projeto, execute o comando abaixo:
+
+1. `docker-compose up -d`
+
+
+Seja da maneira manual ou da maneira automática, após executar os passos acima, os módulos estarão no ar e no caso de não haver a necessidade de mudar as portas, estarão disponíveis nas portas default fornecidas nas etapas acima.
 - dac-contacts-core-db: `5433`
 - dac-contacts-core: `8081`
 - dac-contacts-webapp: `8082`
