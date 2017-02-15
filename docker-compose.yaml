@@ -1,0 +1,35 @@
+version: '2'
+services:
+  #CORE MODULE
+  dac-contacts-core-db:
+    build: ./dac-contacts-core/postgres
+    image: dac-contacts-core-db:latest
+    ports: 
+      - "5433:5432"
+    container_name: dac-contacts-core-db
+  #CORE DATABASE
+  dac-contacts-core:
+    build: ./dac-contacts-core
+    image: dac-contacts-core:latest
+    links:
+      - "dac-contacts-core-db:dac-contacts-core-db"
+    ports:
+      - "8081:8080"
+      - "1098:1099"
+      - "1097:1098"
+      - "3874:3873"
+      - "3701:3700" 
+      - "8182:8181"
+      - "8010:8009"
+    container_name: dac-contacts-core
+  #WEBAPP MODULE
+  dac-contacts-webapp:
+    build: ./dac-contacts-webapp
+    image: dac-contacts-webapp:latest
+    links: 
+      - "dac-contacts-core:dac-contacts-core"
+    ports:
+      - "8082:8080"
+    container_name: dac-contacts-webapp
+  
+
